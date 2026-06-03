@@ -1,0 +1,1429 @@
+cat > /mnt/user-data/outputs/portfolio.html << 'HTMLEOF' <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Huraira Bahadur — Shopify Developer</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+            rel="stylesheet">
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box
+            }
+
+            :root {
+                --bg: #050505;
+                --bg2: #0d0d0d;
+                --bg3: #141414;
+                --card: #111111;
+                --border: rgba(255, 255, 255, 0.07);
+                --accent: #00ff88;
+                --accent2: #7c3aed;
+                --text: #ffffff;
+                --muted: rgba(255, 255, 255, 0.45);
+                --font: 'Syne', sans-serif;
+                --body: 'DM Sans', sans-serif;
+            }
+
+            html {
+                scroll-behavior: smooth;
+                cursor: none
+            }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: var(--body);
+                overflow-x: hidden;
+                line-height: 1.6
+            }
+
+            #cursor {
+                width: 12px;
+                height: 12px;
+                background: var(--accent);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                transition: transform 0.15s ease, background 0.2s;
+                mix-blend-mode: difference
+            }
+
+            #cursor-trail {
+                width: 40px;
+                height: 40px;
+                border: 1px solid rgba(0, 255, 136, 0.3);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9998;
+                transition: all 0.08s ease
+            }
+
+            body:has(a:hover) #cursor,
+            body:has(button:hover) #cursor {
+                transform: scale(3);
+                background: #fff
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 100;
+                padding: 1.5rem 4rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                backdrop-filter: blur(20px);
+                background: rgba(5, 5, 5, 0.8);
+                border-bottom: 1px solid var(--border)
+            }
+
+            .logo {
+                font-family: var(--font);
+                font-size: 1.4rem;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 2.5rem;
+                list-style: none
+            }
+
+            .nav-links a {
+                color: var(--muted);
+                text-decoration: none;
+                font-size: 0.85rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                transition: color 0.2s;
+                font-family: var(--font);
+                font-weight: 500
+            }
+
+            .nav-links a:hover {
+                color: var(--accent)
+            }
+
+            .nav-cta {
+                background: var(--accent);
+                color: #000;
+                padding: 0.6rem 1.4rem;
+                border-radius: 50px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                font-family: var(--font);
+                text-decoration: none;
+                letter-spacing: 0.05em;
+                transition: transform 0.2s, box-shadow 0.2s
+            }
+
+            .nav-cta:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(0, 255, 136, 0.4)
+            }
+
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                padding: 0 4rem;
+                position: relative;
+                overflow: hidden
+            }
+
+            .hero-grid {
+                position: absolute;
+                inset: 0;
+                background-image: linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+                background-size: 60px 60px;
+                animation: gridMove 20s linear infinite
+            }
+
+            @keyframes gridMove {
+                0% {
+                    transform: translateY(0)
+                }
+
+                100% {
+                    transform: translateY(60px)
+                }
+            }
+
+            .hero-glow {
+                position: absolute;
+                top: -20%;
+                right: -10%;
+                width: 600px;
+                height: 600px;
+                background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+                pointer-events: none
+            }
+
+            .hero-glow2 {
+                position: absolute;
+                bottom: -20%;
+                left: -10%;
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+                pointer-events: none
+            }
+
+            .hero-content {
+                max-width: 800px;
+                position: relative;
+                z-index: 1
+            }
+
+            .hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(0, 255, 136, 0.08);
+                border: 1px solid rgba(0, 255, 136, 0.2);
+                color: var(--accent);
+                padding: 0.4rem 1rem;
+                border-radius: 50px;
+                font-size: 0.78rem;
+                font-family: var(--font);
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                margin-bottom: 2rem;
+                animation: fadeSlideUp 0.8s ease forwards
+            }
+
+            .hero-badge::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                background: var(--accent);
+                border-radius: 50%;
+                animation: pulse 2s infinite
+            }
+
+            @keyframes pulse {
+
+                0%,
+                100% {
+                    opacity: 1;
+                    transform: scale(1)
+                }
+
+                50% {
+                    opacity: 0.5;
+                    transform: scale(1.5)
+                }
+            }
+
+            .hero-title {
+                font-family: var(--font);
+                font-size: clamp(3rem, 8vw, 7rem);
+                font-weight: 800;
+                line-height: 0.95;
+                letter-spacing: -0.03em;
+                margin-bottom: 1.5rem;
+                overflow: hidden
+            }
+
+            .hero-title span {
+                display: block;
+                animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                opacity: 0;
+                transform: translateY(100%)
+            }
+
+            .hero-title span:nth-child(1) {
+                animation-delay: 0.2s
+            }
+
+            .hero-title span:nth-child(2) {
+                animation-delay: 0.35s;
+                color: var(--accent)
+            }
+
+            .hero-title span:nth-child(3) {
+                animation-delay: 0.5s
+            }
+
+            @keyframes slideUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0)
+                }
+            }
+
+            @keyframes fadeSlideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px)
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0)
+                }
+            }
+
+            .hero-desc {
+                font-size: 1.1rem;
+                color: var(--muted);
+                max-width: 500px;
+                margin-bottom: 2.5rem;
+                animation: fadeSlideUp 1s 0.7s ease forwards;
+                opacity: 0;
+                line-height: 1.8
+            }
+
+            .hero-actions {
+                display: flex;
+                gap: 1rem;
+                animation: fadeSlideUp 1s 0.9s ease forwards;
+                opacity: 0
+            }
+
+            .btn-primary {
+                background: var(--accent);
+                color: #000;
+                padding: 0.9rem 2rem;
+                border-radius: 50px;
+                font-weight: 700;
+                font-family: var(--font);
+                text-decoration: none;
+                font-size: 0.9rem;
+                letter-spacing: 0.03em;
+                transition: all 0.3s;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 40px rgba(0, 255, 136, 0.3)
+            }
+
+            .btn-outline {
+                border: 1px solid var(--border);
+                color: var(--text);
+                padding: 0.9rem 2rem;
+                border-radius: 50px;
+                font-weight: 500;
+                font-family: var(--font);
+                text-decoration: none;
+                font-size: 0.9rem;
+                letter-spacing: 0.03em;
+                transition: all 0.3s
+            }
+
+            .btn-outline:hover {
+                border-color: rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.05);
+                transform: translateY(-3px)
+            }
+
+            .hero-stats {
+                position: absolute;
+                right: 4rem;
+                bottom: 6rem;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                animation: fadeSlideUp 1s 1.1s ease forwards;
+                opacity: 0
+            }
+
+            .stat {
+                text-align: right
+            }
+
+            .stat-num {
+                font-family: var(--font);
+                font-size: 2.8rem;
+                font-weight: 800;
+                color: var(--accent);
+                line-height: 1
+            }
+
+            .stat-label {
+                font-size: 0.78rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                font-family: var(--font)
+            }
+
+            .scroll-hint {
+                position: absolute;
+                bottom: 2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                color: var(--muted);
+                font-size: 0.75rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                font-family: var(--font);
+                animation: fadeSlideUp 1s 1.5s ease forwards;
+                opacity: 0
+            }
+
+            .scroll-line {
+                width: 1px;
+                height: 50px;
+                background: linear-gradient(to bottom, var(--accent), transparent);
+                animation: scrollPulse 2s infinite
+            }
+
+            @keyframes scrollPulse {
+
+                0%,
+                100% {
+                    opacity: 0.3;
+                    transform: scaleY(1)
+                }
+
+                50% {
+                    opacity: 1;
+                    transform: scaleY(1.2)
+                }
+            }
+
+            section {
+                padding: 8rem 4rem
+            }
+
+            .section-label {
+                font-family: var(--font);
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 1rem
+            }
+
+            .section-title {
+                font-family: var(--font);
+                font-size: clamp(2rem, 4vw, 3.5rem);
+                font-weight: 800;
+                line-height: 1.05;
+                letter-spacing: -0.02em;
+                margin-bottom: 1.5rem
+            }
+
+            .section-title em {
+                font-style: normal;
+                color: var(--accent)
+            }
+
+            .marquee-section {
+                padding: 3rem 0;
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+                overflow: hidden;
+                background: var(--bg2)
+            }
+
+            .marquee-track {
+                display: flex;
+                gap: 0;
+                animation: marquee 25s linear infinite;
+                width: max-content
+            }
+
+            .marquee-track:hover {
+                animation-play-state: paused
+            }
+
+            .marquee-item {
+                font-family: var(--font);
+                font-size: 1.1rem;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: var(--muted);
+                padding: 0 3rem;
+                white-space: nowrap;
+                transition: color 0.3s
+            }
+
+            .marquee-item:hover {
+                color: var(--accent)
+            }
+
+            .marquee-dot {
+                color: var(--accent);
+                margin: 0 0.5rem
+            }
+
+            @keyframes marquee {
+                0% {
+                    transform: translateX(0)
+                }
+
+                100% {
+                    transform: translateX(-50%)
+                }
+            }
+
+            .skills-section {
+                background: var(--bg2)
+            }
+
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 4rem
+            }
+
+            .skill-card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                cursor: default
+            }
+
+            .skill-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(124, 58, 237, 0.05));
+                transition: opacity 0.4s
+            }
+
+            .skill-card:hover {
+                transform: translateY(-8px);
+                border-color: rgba(0, 255, 136, 0.2)
+            }
+
+            .skill-card:hover::before {
+                opacity: 1
+            }
+
+            .skill-icon {
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
+                display: block
+            }
+
+            .skill-name {
+                font-family: var(--font);
+                font-size: 1.15rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem
+            }
+
+            .skill-desc {
+                font-size: 0.88rem;
+                color: var(--muted);
+                line-height: 1.7
+            }
+
+            .skill-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 1.2rem
+            }
+
+            .tag {
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--border);
+                color: var(--muted);
+                padding: 3px 10px;
+                border-radius: 50px;
+                font-size: 0.72rem;
+                font-family: var(--font);
+                font-weight: 500;
+                letter-spacing: 0.05em;
+                text-transform: uppercase
+            }
+
+            /* PROJECTS */
+            .projects-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 4rem
+            }
+
+            .projects-grid {
+                display: grid;
+                gap: 1.5rem
+            }
+
+            /* Project link card */
+            .project-link-card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                text-decoration: none;
+                color: var(--text);
+                position: relative;
+                overflow: hidden;
+                gap: 1.5rem
+            }
+
+            .project-link-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                background: linear-gradient(135deg, rgba(0, 255, 136, 0.04), rgba(124, 58, 237, 0.04));
+                transition: opacity 0.4s
+            }
+
+            .project-link-card:hover {
+                transform: translateY(-4px);
+                border-color: rgba(0, 255, 136, 0.3);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3)
+            }
+
+            .project-link-card:hover::before {
+                opacity: 1
+            }
+
+            .project-link-card:hover .project-arrow {
+                transform: translate(4px, -4px);
+                color: var(--accent)
+            }
+
+            .project-left {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                flex: 1;
+                min-width: 0
+            }
+
+            .project-num-badge {
+                font-family: var(--font);
+                font-size: 0.7rem;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                color: var(--accent);
+                background: rgba(0, 255, 136, 0.08);
+                border: 1px solid rgba(0, 255, 136, 0.2);
+                padding: 5px 14px;
+                border-radius: 50px;
+                white-space: nowrap;
+                flex-shrink: 0
+            }
+
+            .project-info-inline {
+                min-width: 0
+            }
+
+            .project-name {
+                font-family: var(--font);
+                font-size: 1.2rem;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+                margin-bottom: 0.3rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis
+            }
+
+            .project-url {
+                font-size: 0.8rem;
+                color: var(--muted);
+                font-family: var(--font)
+            }
+
+            .project-tags-inline {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+                flex-shrink: 0
+            }
+
+            .project-arrow {
+                font-size: 1.3rem;
+                transition: transform 0.3s, color 0.3s;
+                color: var(--muted);
+                flex-shrink: 0
+            }
+
+            /* process */
+            .process-section {
+                background: var(--bg2)
+            }
+
+            .process-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1px;
+                background: var(--border);
+                border-radius: 20px;
+                overflow: hidden;
+                margin-top: 4rem
+            }
+
+            .process-step {
+                background: var(--card);
+                padding: 2.5rem 2rem;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.3s
+            }
+
+            .process-step:hover {
+                background: var(--bg3)
+            }
+
+            .process-step::before {
+                content: attr(data-num);
+                position: absolute;
+                top: 1rem;
+                right: 1.5rem;
+                font-family: var(--font);
+                font-size: 4rem;
+                font-weight: 800;
+                color: rgba(255, 255, 255, 0.03);
+                line-height: 1
+            }
+
+            .step-icon {
+                width: 48px;
+                height: 48px;
+                background: rgba(0, 255, 136, 0.08);
+                border: 1px solid rgba(0, 255, 136, 0.15);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1.5rem;
+                font-size: 1.3rem
+            }
+
+            .step-title {
+                font-family: var(--font);
+                font-size: 1rem;
+                font-weight: 700;
+                margin-bottom: 0.6rem
+            }
+
+            .step-desc {
+                font-size: 0.85rem;
+                color: var(--muted);
+                line-height: 1.7
+            }
+
+            /* testimonials */
+            .testimonials-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                margin-top: 4rem
+            }
+
+            .testimonial-card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem;
+                position: relative;
+                transition: all 0.4s
+            }
+
+            .testimonial-card:hover {
+                transform: translateY(-6px);
+                border-color: rgba(255, 255, 255, 0.15)
+            }
+
+            .quote-mark {
+                font-family: var(--font);
+                font-size: 4rem;
+                color: var(--accent);
+                line-height: 0.5;
+                margin-bottom: 1.2rem;
+                display: block;
+                opacity: 0.5
+            }
+
+            .testimonial-text {
+                font-size: 0.92rem;
+                color: rgba(255, 255, 255, 0.8);
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+                font-style: italic
+            }
+
+            .testimonial-author {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border-top: 1px solid var(--border);
+                padding-top: 1.2rem
+            }
+
+            .author-avatar {
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: var(--font);
+                font-weight: 700;
+                font-size: 0.85rem;
+                flex-shrink: 0
+            }
+
+            .author-name {
+                font-family: var(--font);
+                font-size: 0.9rem;
+                font-weight: 700
+            }
+
+            .author-role {
+                font-size: 0.78rem;
+                color: var(--muted)
+            }
+
+            .stars {
+                color: var(--accent);
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+                margin-bottom: 1rem
+            }
+
+            .cta-section {
+                text-align: center;
+                padding: 10rem 4rem;
+                position: relative;
+                overflow: hidden
+            }
+
+            .cta-bg {
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.06) 0%, transparent 70%);
+                pointer-events: none
+            }
+
+            .cta-title {
+                font-family: var(--font);
+                font-size: clamp(2.5rem, 5vw, 5rem);
+                font-weight: 800;
+                letter-spacing: -0.03em;
+                margin-bottom: 1.5rem;
+                position: relative
+            }
+
+            .cta-desc {
+                font-size: 1.1rem;
+                color: var(--muted);
+                max-width: 500px;
+                margin: 0 auto 3rem;
+                line-height: 1.8
+            }
+
+            .cta-actions {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                flex-wrap: wrap
+            }
+
+            .cta-contact-row {
+                display: flex;
+                justify-content: center;
+                gap: 3rem;
+                margin-top: 4rem;
+                flex-wrap: wrap
+            }
+
+            .contact-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--muted);
+                font-size: 0.9rem;
+                text-decoration: none;
+                transition: color 0.2s
+            }
+
+            .contact-item:hover {
+                color: var(--accent)
+            }
+
+            .contact-icon {
+                width: 36px;
+                height: 36px;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--border);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem
+            }
+
+            footer {
+                border-top: 1px solid var(--border);
+                padding: 3rem 4rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: var(--bg2)
+            }
+
+            .footer-copy {
+                font-size: 0.82rem;
+                color: var(--muted);
+                font-family: var(--font)
+            }
+
+            .footer-links {
+                display: flex;
+                gap: 2rem
+            }
+
+            .footer-links a {
+                font-size: 0.82rem;
+                color: var(--muted);
+                text-decoration: none;
+                font-family: var(--font);
+                transition: color 0.2s
+            }
+
+            .footer-links a:hover {
+                color: var(--accent)
+            }
+
+            .reveal {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1)
+            }
+
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0)
+            }
+
+            .reveal-delay-1 {
+                transition-delay: 0.1s
+            }
+
+            .reveal-delay-2 {
+                transition-delay: 0.2s
+            }
+
+            .reveal-delay-3 {
+                transition-delay: 0.3s
+            }
+
+            .reveal-delay-4 {
+                transition-delay: 0.4s
+            }
+
+            @media(max-width:900px) {
+                nav {
+                    padding: 1.2rem 1.5rem
+                }
+
+                .nav-links {
+                    display: none
+                }
+
+                section {
+                    padding: 5rem 1.5rem
+                }
+
+                .hero {
+                    padding: 0 1.5rem
+                }
+
+                .hero-stats {
+                    display: none
+                }
+
+                .process-grid {
+                    grid-template-columns: 1fr 1fr
+                }
+
+                .testimonials-grid {
+                    grid-template-columns: 1fr
+                }
+
+                footer {
+                    flex-direction: column;
+                    gap: 1rem;
+                    text-align: center;
+                    padding: 2rem 1.5rem
+                }
+
+                .project-link-card {
+                    flex-wrap: wrap
+                }
+
+                .project-tags-inline {
+                    display: none
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id="cursor"></div>
+        <div id="cursor-trail"></div>
+
+        <nav>
+            <div class="logo">Huraira Bahadur</div>
+            <ul class="nav-links">
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+            </ul>
+            <a href="https://wa.me/923195248961" class="nav-cta">Hire Me</a>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="hero-grid"></div>
+            <div class="hero-glow"></div>
+            <div class="hero-glow2"></div>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span></span>
+                    Available for new projects
+                </div>
+                <h1 class="hero-title">
+                    <span>Shopify</span>
+                    <span>Developer</span>
+                    <span>&amp; Designer</span>
+                </h1>
+                <p class="hero-desc">3+ years of crafting high-converting Shopify stores — from custom themes and liquid
+                    code to dropshipping empires and SEO domination.</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary">
+                        View My Work
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/923195248961 class="btn-outline">Let's Talk</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-num">50+</div>
+                    <div class="stat-label">Stores Built</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">3yr</div>
+                    <div class="stat-label">Experience</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">100%</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+            </div>
+            <div class="scroll-hint">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- MARQUEE -->
+        <div class="marquee-section">
+            <div class="marquee-track">
+                <span class="marquee-item">Shopify Expert</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Custom Themes</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Liquid Code</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Dropshipping</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">SEO Marketing</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Conversion Rate</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Speed Optimization</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Custom Sections</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Shopify Expert</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Custom Themes</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Liquid Code</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Dropshipping</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">SEO Marketing</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Conversion Rate</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Speed Optimization</span><span class="marquee-dot">✦</span>
+                <span class="marquee-item">Custom Sections</span><span class="marquee-dot">✦</span>
+            </div>
+        </div>
+
+        <!-- SKILLS -->
+        <section class="skills-section" id="skills">
+            <div class="section-label reveal">What I Do</div>
+            <h2 class="section-title reveal">Full-Stack <em>Shopify</em><br>Development</h2>
+            <div class="skills-grid">
+                <div class="skill-card reveal reveal-delay-1">
+                    <span class="skill-icon">🎨</span>
+                    <div class="skill-name">Custom Theme Development</div>
+                    <div class="skill-desc">Pixel-perfect Shopify themes built from scratch or heavily customized. Every
+                        hover effect, animation, and interaction crafted with care.</div>
+                    <div class="skill-tags"><span class="tag">Liquid</span><span class="tag">HTML/CSS</span><span
+                            class="tag">JavaScript</span><span class="tag">Dawn</span></div>
+                </div>
+                <div class="skill-card reveal reveal-delay-2">
+                    <span class="skill-icon">🚀</span>
+                    <div class="skill-name">Dropshipping Stores</div>
+                    <div class="skill-desc">High-converting dropshipping stores optimized for maximum sales. Product
+                        research, supplier setup, and full store launch — ready to sell.</div>
+                    <div class="skill-tags"><span class="tag">DSers</span><span class="tag">AutoDS</span><span
+                            class="tag">AliExpress</span><span class="tag">Oberlo</span></div>
+                </div>
+                <div class="skill-card reveal reveal-delay-3">
+                    <span class="skill-icon">📈</span>
+                    <div class="skill-name">SEO &amp; Marketing</div>
+                    <div class="skill-desc">Full technical SEO, meta tags, schema markup, site speed, and content
+                        strategy to rank higher and drive organic traffic that converts.</div>
+                    <div class="skill-tags"><span class="tag">On-Page SEO</span><span class="tag">Schema</span><span
+                            class="tag">Core Web Vitals</span></div>
+                </div>
+                <div class="skill-card reveal reveal-delay-1">
+                    <span class="skill-icon">⚡</span>
+                    <div class="skill-name">Speed &amp; Performance</div>
+                    <div class="skill-desc">Lighthouse 90+ scores guaranteed. Image optimization, lazy loading, critical
+                        CSS, and code splitting for blazing-fast stores.</div>
+                    <div class="skill-tags"><span class="tag">PageSpeed</span><span class="tag">Core Web
+                            Vitals</span><span class="tag">CDN</span></div>
+                </div>
+                <div class="skill-card reveal reveal-delay-2">
+                    <span class="skill-icon">🔧</span>
+                    <div class="skill-name">Custom App Integration</div>
+                    <div class="skill-desc">Seamless integrations with Klaviyo, Judge.me, ReCharge, Loox, Yotpo, and any
+                        third-party app your store needs.</div>
+                    <div class="skill-tags"><span class="tag">Klaviyo</span><span class="tag">Judge.me</span><span
+                            class="tag">ReCharge</span><span class="tag">Metafields</span></div>
+                </div>
+                <div class="skill-card reveal reveal-delay-3">
+                    <span class="skill-icon">✨</span>
+                    <div class="skill-name">Hover Effects &amp; Animations</div>
+                    <div class="skill-desc">Mind-blowing micro-interactions, scroll animations, parallax effects, and
+                        hover states that make visitors say "wow" and stay longer.</div>
+                    <div class="skill-tags"><span class="tag">GSAP</span><span class="tag">CSS Animations</span><span
+                            class="tag">Lottie</span><span class="tag">Swiper</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+            <div class="projects-header">
+                <div>
+                    <div class="section-label reveal">Portfolio</div>
+                    <h2 class="section-title reveal">Selected <em>Work</em></h2>
+                </div>
+                <a href="https://wa.me/923195248961" class="btn-outline reveal" style="margin-bottom:0.5rem">Start a Project ↗</a>
+            </div>
+
+            <div class="projects-grid">
+
+                <a href="https://gunner.com" target="_blank" class="project-link-card reveal">
+                    <div class="project-left">
+                        <span class="project-num-badge">01</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Gunner</div>
+                            <div class="project-url">gunner.com</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Custom Section</span>
+                        <span class="tag">Judge.me</span>
+                        <span class="tag">Gear & Outdoors</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://boldstride.shop" target="_blank" class="project-link-card reveal reveal-delay-1">
+                    <div class="project-left">
+                        <span class="project-num-badge">02</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Bold Stride</div>
+                            <div class="project-url">boldstride.shop</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Custom Theme</span>
+                        <span class="tag">Footwear</span>
+                        <span class="tag">Clothing</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://ivarclothing.com" target="_blank" class="project-link-card reveal reveal-delay-2">
+                    <div class="project-left">
+                        <span class="project-num-badge">03</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Ivar Clothing</div>
+                            <div class="project-url">ivarclothing.com</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Fashion</span>
+                        <span class="tag">Liquid</span>
+                        <span class="tag">Custom Sections</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://ballwash.com" target="_blank" class="project-link-card reveal reveal-delay-3">
+                    <div class="project-left">
+                        <span class="project-num-badge">04</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Ballwash</div>
+                            <div class="project-url">ballwash.com</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Grooming</span>
+                        <span class="tag">CRO</span>
+                        <span class="tag">Speed Optimization</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://brightland.co" target="_blank" class="project-link-card reveal reveal-delay-1">
+                    <div class="project-left">
+                        <span class="project-num-badge">05</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Brightland</div>
+                            <div class="project-url">brightland.co</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Food & Olive Oil</span>
+                        <span class="tag">Custom Theme</span>
+                        <span class="tag">SEO</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://azoproducts.com" target="_blank" class="project-link-card reveal reveal-delay-2">
+                    <div class="project-left">
+                        <span class="project-num-badge">06</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">AZO Products</div>
+                            <div class="project-url">azoproducts.com</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Health</span>
+                        <span class="tag">Klaviyo</span>
+                        <span class="tag">Custom Sections</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://audionic.co" target="_blank" class="project-link-card reveal reveal-delay-3">
+                    <div class="project-left">
+                        <span class="project-num-badge">07</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Audionic</div>
+                            <div class="project-url">audionic.co</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Electronics</span>
+                        <span class="tag">GSAP</span>
+                        <span class="tag">Custom Theme</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+                <a href="https://oxfordpennant.com" target="_blank" class="project-link-card reveal reveal-delay-1">
+                    <div class="project-left">
+                        <span class="project-num-badge">08</span>
+                        <div class="project-info-inline">
+                            <div class="project-name">Oxford Pennant</div>
+                            <div class="project-url">oxfordpennant.com</div>
+                        </div>
+                    </div>
+                    <div class="project-tags-inline">
+                        <span class="tag">Lifestyle</span>
+                        <span class="tag">Shopify Plus</span>
+                        <span class="tag">Custom Sections</span>
+                    </div>
+                    <span class="project-arrow">↗</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section class="process-section" id="process">
+            <div class="section-label reveal">How I Work</div>
+            <h2 class="section-title reveal">My <em>Process</em></h2>
+            <div class="process-grid reveal">
+                <div class="process-step" data-num="01">
+                    <div class="step-icon">🎯</div>
+                    <div class="step-title">Discovery</div>
+                    <div class="step-desc">Deep dive into your brand, goals, competitors, and target audience. Define
+                        the roadmap and deliverables clearly.</div>
+                </div>
+                <div class="process-step" data-num="02">
+                    <div class="step-icon">✏️</div>
+                    <div class="step-title">Design</div>
+                    <div class="step-desc">Wireframes and high-fidelity mockups. Every pixel planned before a single
+                        line of code is written.</div>
+                </div>
+                <div class="process-step" data-num="03">
+                    <div class="step-icon">💻</div>
+                    <div class="step-title">Development</div>
+                    <div class="step-desc">Clean, maintainable Liquid code. Custom sections, animations, and
+                        integrations built to perfection.</div>
+                </div>
+                <div class="process-step" data-num="04">
+                    <div class="step-icon">🚀</div>
+                    <div class="step-title">Launch</div>
+                    <div class="step-desc">Thorough QA testing across all devices, speed audit, and a smooth handoff
+                        with full documentation.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="testimonials">
+            <div class="section-label reveal">Client Reviews</div>
+            <h2 class="section-title reveal">What Clients <em>Say</em></h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal reveal-delay-1">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-mark">"</span>
+                    <p class="testimonial-text">Huraira completely transformed our store. The custom animations and hover
+                        effects are insane — customers literally comment on how beautiful the site looks. Sales went up
+                        180%.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background:rgba(0,255,136,0.1);color:#00ff88">SA</div>
+                        <div>
+                            <div class="author-name">Sara Khan</div>
+                            <div class="author-role">CEO, GlowSkin Cosmetics</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-2">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-mark">"</span>
+                    <p class="testimonial-text">Best Shopify developer I've ever worked with. He understood exactly what
+                        I needed, delivered 3 days early, and the SEO work alone has brought us thousands in free
+                        traffic.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background:rgba(124,58,237,0.15);color:#a78bfa">MK</div>
+                        <div>
+                            <div class="author-name">Mike Kaur</div>
+                            <div class="author-role">Founder, NestHaven Home</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-3">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-mark">"</span>
+                    <p class="testimonial-text">I gave Ahmad a basic Shopify store and he turned it into a money
+                        machine. The dropshipping setup, email flows, and conversion optimization — everything is just
+                        chef's kiss.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background:rgba(239,100,39,0.15);color:#fb923c">JL</div>
+                        <div>
+                            <div class="author-name">James Liu</div>
+                            <div class="author-role">Owner, LuxeWear Store</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section" id="contact">
+            <div class="cta-bg"></div>
+            <div class="section-label reveal">Let's Work Together</div>
+            <h2 class="cta-title reveal">Ready to Build<br><em>Something Amazing?</em></h2>
+            <p class="cta-desc reveal">Whether it's a custom theme, a dropshipping empire, or an SEO overhaul — let's
+                make your Shopify store the best in your niche.</p>
+            <div class="cta-actions reveal">
+                <a href="mailto:hurairayousafzaii43@gmail.com" class="btn-primary">
+                    Start a Project
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+            <div class="cta-contact-row reveal">
+                <a href="mailto:hurairayousafzaii43@gmail.com" class="contact-item">
+                    <span class="contact-icon">✉</span>
+                    hurairayousafzaii43@gmail.com
+                </a>
+                <a href="https://wa.me/923195248961" class="contact-item">
+                    <span class="contact-icon">💬</span>
+                    +92 3195248961
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-copy">© 2024 Huraira Bahadur — Shopify Developer</div>
+        </footer>
+
+        <script>
+            const cursor = document.getElementById('cursor');
+            const trail = document.getElementById('cursor-trail');
+            let mx = 0, my = 0, tx = 0, ty = 0;
+            document.addEventListener('mousemove', e => {
+                mx = e.clientX; my = e.clientY;
+                cursor.style.left = (mx - 6) + 'px';
+                cursor.style.top = (my - 6) + 'px';
+            });
+            function animTrail() {
+                tx += (mx - tx) * 0.12; ty += (my - ty) * 0.12;
+                trail.style.left = (tx - 20) + 'px';
+                trail.style.top = (ty - 20) + 'px';
+                requestAnimationFrame(animTrail);
+            }
+            animTrail();
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) e.target.classList.add('visible');
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        </script>
+    </body>
+
+    </html>
