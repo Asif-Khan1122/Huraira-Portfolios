@@ -490,7 +490,7 @@
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;
-        border-right: 4px solid var(--accent);
+        /* border-right: 4px solid var(--accent); */
         /* FIX: max-width so it never overflows small screens */
         max-width: 100%;
       }
@@ -500,15 +500,19 @@
       }
 
       .typed-text.blinking {
-        border-right: 4px solid var(--accent);
+        /* border-right: 4px solid var(--accent); */
         animation: blink 0.7s step-end infinite;
       }
 
       .typed-text.done {
-        border-right: none;
+        /* border-right: none; */
         width: auto !important;
       }
-
+      @media (max-width: 400px) {
+        .scroll-hint {
+          bottom: -2rem !important;
+        }
+      }
       @keyframes typing {
         from {
           width: 0;
@@ -1479,7 +1483,6 @@
 
     <!-- FLOATING PROJECT IMAGE -->
     <div class="project-hover-img" id="projectHoverImg">
-      <img src="" alt="" id="projectHoverImgEl" />
       <div class="img-overlay"></div>
       <div class="img-label" id="projectHoverLabel"></div>
       <div class="img-badge">Live Site</div>
@@ -1569,7 +1572,7 @@
           <div class="stat-label">Stores Built</div>
         </div>
         <div class="stat">
-          <div class="stat-num">2.5yr</div>
+          <div class="stat-num">3yr+</div>
           <div class="stat-label">Experience</div>
         </div>
         <div class="stat">
